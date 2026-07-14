@@ -1,0 +1,88 @@
+'use client';
+import { useSearchParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { servicesData } from '@/data/services';
+import { useState, Suspense } from 'react';
+
+const bookingSchema = z.object({
+  service: z.string().min(1, 'Please select a service option.'),
+  date: z.string().min(1, 'Appointment date is required.'),
+  name: z.string().min(2, 'Name must be filled.'),
+  email: z.string().email('Please enter a valid email.'),
+});
+
+type BookingFormValues = z.infer<typeof bookingSchema>;
+
+function BookingContent() {
+  const searchParams = useSearchParams();
+  const defaultService = searchParams.get('service') || '';
+  const [success, setSuccess] = useState(false);
+
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<BookingFormValues>({
+    resolver: zodResolver(bookingSchema),
+    defaultValues: { service: defaultService }
+  });
+
+  const onSubmit = async (data: BookingFormValues) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSuccess(true);
+  };
+
+  return (
+    <div className="max-w-md mx-auto px-6 py-16">
+      <div className="text-center mb-12">
+        <h1 className="text-3xl font-light uppercase tracking-widest">BOOK SESSION</h1>
+        <div className="w-12 h-[1px] bg-black mx-auto mt-4" />
+      </div>
+
+      {success ? (
+        <div className="border border-black p-8 text-center uppercase text-xs tracking-widest">
+          Booking submission completed. We will reach out shortly.
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Service</label>
+            <select {...register('service')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black">
+              <option value="">-- Choose Option --</option>
+              {servicesData.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
+            </select>
+            {errors.service && <p className="text-red-500 text-[10px] mt-1">{errors.service.message}</p>}
+          </div>
+
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Date</label>
+            <input type="date" {...register('date')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black" />
+            {errors.date && <p className="text-red-500 text-[10px] mt-1">{errors.date.message}</p>}
+          </div>
+
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Your Name</label>
+            <input type="text" {...register('name')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black" />
+            {errors.name && <p className="text-red-500 text-[10px] mt-1">{errors.name.message}</p>}
+          </div>
+
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Email Address</label>
+            <input type="email" {...register('email')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black" />
+            {errors.email && <p className="text-red-500 text-[10px] mt-1">{errors.email.message}</p>}
+          </div>
+
+          <button type="submit" disabled={isSubmitting} className="w-full bg-black text-white py-4 text-xs font-semibold tracking-widest uppercase hover:bg-zinc-800 disabled:bg-zinc-400">
+            {isSubmitting ? 'Processing...' : 'Request Appointment'}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+export default function Book() {
+  return (
+    <Suspense fallback={<div className="text-center py-20 text-xs tracking-widest">LOADING CONTENT...</div>}>
+      <BookingContent />
+    </Suspense>
+  );
+}
