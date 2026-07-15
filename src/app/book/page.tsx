@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { servicesData } from '@/data/services';
 import { useState, Suspense } from 'react';
+import { useMutation } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
 
 const bookingSchema = z.object({
   service: z.string().min(1, 'Please select a service option.'),
@@ -19,6 +21,7 @@ function BookingContent() {
   const searchParams = useSearchParams();
   const defaultService = searchParams.get('service') || '';
   const [success, setSuccess] = useState(false);
+  const saveBooking = useMutation(api.submissions.createBooking);
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
@@ -26,33 +29,47 @@ function BookingContent() {
   });
 
   const onSubmit = async (data: BookingFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSuccess(true);
+    try {
+      await saveBooking({
+        service: data.service,
+        date: data.date,
+        name: data.name,
+        email: data.email
+      });
+      setSuccess(true);
+    } catch (err) {
+      console.error("Failed to save booking:", err);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto px-6 py-16">
+    <div className="max-w-md mx-auto px-6 py-16 text-white">
       <div className="text-center mb-12">
-        <h1 className="text-3xl font-light uppercase tracking-widest">BOOK SESSION</h1>
-        <div className="w-12 h-[1px] bg-black mx-auto mt-4" />
+        {/* Changed text-black to text-white */}
+        <h1 className="text-3xl font-light uppercase tracking-widest text-white">BOOK SESSION</h1>
+        <div className="w-12 h-[1px] bg-white mx-auto mt-4" />
       </div>
 
       {success ? (
-        <div className="border border-black p-8 text-center uppercase text-xs tracking-widest">
-          Booking submission completed. We will reach out shortly.
+        <div className="border border-white p-8 text-center space-y-4 text-white">
+          <h2 className="text-sm font-semibold uppercase tracking-wider">Booking Request Saved</h2>
+          <p className="text-xs text-zinc-400 font-light leading-relaxed">
+            Your appointment has been registered in our database. A copy is routed to <strong className="text-white">atienoshalline29@gmail.com</strong>.
+          </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Service</label>
+            {/* Changed label text color to text-zinc-300 */}
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Service</label>
             <select 
               {...register('service')} 
               className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black text-black"
             >
               <option value="" className="text-black bg-white">-- Choose Option --</option>
               {servicesData.map((s) => (
-                <option key={s.id} value={s.id} className="text-black bg-white">
-                  {s.title}
+                <option key={s.id} value={s.title} className="text-black bg-white">
+                  {s.title} ({s.price})
                 </option>
               ))}
             </select>
@@ -60,7 +77,8 @@ function BookingContent() {
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Date</label>
+            {/* Changed label text color to text-zinc-300 */}
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Date</label>
             <input 
               type="date" 
               {...register('date')} 
@@ -70,7 +88,8 @@ function BookingContent() {
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Your Name</label>
+            {/* Changed label text color to text-zinc-300 */}
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Your Name</label>
             <input 
               type="text" 
               {...register('name')} 
@@ -80,7 +99,8 @@ function BookingContent() {
           </div>
 
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Email Address</label>
+            {/* Changed label text color to text-zinc-300 */}
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Email Address</label>
             <input 
               type="email" 
               {...register('email')} 
@@ -92,7 +112,7 @@ function BookingContent() {
           <button 
             type="submit" 
             disabled={isSubmitting} 
-            className="w-full bg-black text-white py-4 text-xs font-semibold tracking-widest uppercase hover:bg-zinc-800 disabled:bg-zinc-400"
+            className="w-full bg-white text-black py-4 text-xs font-semibold tracking-widest uppercase hover:bg-zinc-200 disabled:bg-zinc-600 transition-colors"
           >
             {isSubmitting ? 'Processing...' : 'Request Appointment'}
           </button>
@@ -104,7 +124,7 @@ function BookingContent() {
 
 export default function Book() {
   return (
-    <Suspense fallback={<div className="text-center py-20 text-xs tracking-widest">LOADING CONTENT...</div>}>
+    <Suspense fallback={<div className="text-center py-20 text-xs tracking-widest text-white">LOADING CONTENT...</div>}>
       <BookingContent />
     </Suspense>
   );
