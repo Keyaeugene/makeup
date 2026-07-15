@@ -43,8 +43,18 @@ export default function Home() {
         </div>
       </div>
 
-      {/* NEW: Luxury Philosophy Statement (Bobbi Brown High-Contrast Aesthetic) */}
-      <section className="bg-black text-white py-24 px-6 border-t border-zinc-900">
+      {/* NEW: Elegant Typographic Quote Banner */}
+      <section className="border-y border-zinc-200 py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <p className="text-zinc-400 text-[10px] tracking-[0.4em] uppercase font-bold mb-3">OUR CORE BELIEF</p>
+          <h2 className="text-xl md:text-3xl font-extralight tracking-[0.25em] uppercase text-black leading-relaxed max-w-4xl mx-auto">
+            "YOU ARE ALREADY BEAUTIFUL, I'M ONLY ENHANCING IT"
+          </h2>
+        </div>
+      </section>
+
+      {/* Luxury Philosophy Statement (Bobbi Brown High-Contrast Aesthetic) */}
+      <section className="bg-black text-white py-24 px-6">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-[10px] tracking-[0.4em] text-zinc-400 font-bold uppercase">THE PHILOSOPHY</h2>
           <h3 className="text-2xl md:text-4xl font-light tracking-widest uppercase leading-snug">
@@ -57,7 +67,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW: Client Quick Links Feature Row */}
+      {/* Client Quick Links Feature Row */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div className="space-y-3">

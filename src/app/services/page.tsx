@@ -17,7 +17,7 @@ export default function Services() {
                 <h3 className="text-md font-medium uppercase tracking-wider">{service.title}</h3>
                 <span className="text-[10px] px-2 py-0.5 bg-zinc-100 text-zinc-500 font-light">{service.duration}</span>
               </div>
-              <p className="text-xs text-zinc-600 mt-2 font-light leading-relaxed">{service.description}</p>
+              <p className="text-xs text-zinc-1000 mt-2 font-light leading-relaxed">{service.description}</p>
             </div>
             <div className="text-right flex flex-col items-end w-full md:w-auto">
               <span className="text-lg font-light tracking-widest mb-2">{service.price}</span>

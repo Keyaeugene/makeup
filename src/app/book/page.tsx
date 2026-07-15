@@ -45,32 +45,55 @@ function BookingContent() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Service</label>
-            <select {...register('service')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black">
-              <option value="">-- Choose Option --</option>
-              {servicesData.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
+            <select 
+              {...register('service')} 
+              className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black text-black"
+            >
+              <option value="" className="text-black bg-white">-- Choose Option --</option>
+              {servicesData.map((s) => (
+                <option key={s.id} value={s.id} className="text-black bg-white">
+                  {s.title}
+                </option>
+              ))}
             </select>
             {errors.service && <p className="text-red-500 text-[10px] mt-1">{errors.service.message}</p>}
           </div>
 
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Date</label>
-            <input type="date" {...register('date')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black" />
+            <input 
+              type="date" 
+              {...register('date')} 
+              className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black text-black" 
+            />
             {errors.date && <p className="text-red-500 text-[10px] mt-1">{errors.date.message}</p>}
           </div>
 
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Your Name</label>
-            <input type="text" {...register('name')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black" />
+            <input 
+              type="text" 
+              {...register('name')} 
+              className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black text-black" 
+            />
             {errors.name && <p className="text-red-500 text-[10px] mt-1">{errors.name.message}</p>}
           </div>
 
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-2">Email Address</label>
-            <input type="email" {...register('email')} className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black" />
+            <input 
+              type="email" 
+              {...register('email')} 
+              className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black text-black" 
+            />
             {errors.email && <p className="text-red-500 text-[10px] mt-1">{errors.email.message}</p>}
           </div>
 
-          <button type="submit" disabled={isSubmitting} className="w-full bg-black text-white py-4 text-xs font-semibold tracking-widest uppercase hover:bg-zinc-800 disabled:bg-zinc-400">
+          <button 
+            type="submit" 
+            disabled={isSubmitting} 
+            className="w-full bg-black text-white py-4 text-xs font-semibold tracking-widest uppercase hover:bg-zinc-800 disabled:bg-zinc-400"
+          >
             {isSubmitting ? 'Processing...' : 'Request Appointment'}
           </button>
         </form>
