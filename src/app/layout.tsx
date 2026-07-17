@@ -1,27 +1,38 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Playfair_Display, Lato } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import { Providers } from './providers';
+import Preloader from '@/components/Preloader';
+import SiteFooter from '@/components/SiteFooter';
 
-const inter = Inter({ subsets: ['latin'] });
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  variable: '--font-lato',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'Luxury Makeup Portfolio',
-  description: 'Clean, high-contrast custom portfolio inspired by professional editorial cosmetics layouts.',
+  title: 'Sahli — Professional Makeup Artist',
+  description: 'Professional makeup artistry for bridal, editorial, and special events in Nairobi.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white text-black min-h-screen flex flex-col antialiased`}>
-        {/* Wrap everything in your Convex Providers */}
+      <body className={`${playfair.variable} ${lato.variable} bg-cream text-foreground min-h-screen flex flex-col antialiased`}>
         <Providers>
+          <Preloader />
           <Navbar />
           <main className="flex-grow">{children}</main>
-          <footer className="bg-black text-zinc-500 py-10 text-center text-xs tracking-widest border-t border-zinc-900">
-            &copy; {new Date().getFullYear()} LUXURY ARTISTRY. ALL RIGHTS RESERVED.
-          </footer>
+          <SiteFooter />
         </Providers>
       </body>
     </html>

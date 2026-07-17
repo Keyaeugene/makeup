@@ -43,25 +43,23 @@ function BookingContent() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-6 py-16 text-white">
+    <div className="max-w-md mx-auto px-6 py-16">
       <div className="text-center mb-12">
-        {/* Changed text-black to text-white */}
-        <h1 className="text-3xl font-light uppercase tracking-widest text-white">BOOK SESSION</h1>
-        <div className="w-12 h-[1px] bg-white mx-auto mt-4" />
+        <h1 className="font-serif text-3xl font-bold text-foreground">Book Session</h1>
+        <div className="w-12 h-px bg-accent mx-auto mt-4" />
       </div>
 
       {success ? (
-        <div className="border border-white p-8 text-center space-y-4 text-white">
-          <h2 className="text-sm font-semibold uppercase tracking-wider">Booking Request Saved</h2>
-          <p className="text-xs text-zinc-400 font-light leading-relaxed">
-            Your appointment has been registered in our database. A copy is routed to <strong className="text-white">atienoshalline29@gmail.com</strong>.
+        <div className="border border-cream-dark p-8 text-center space-y-4 bg-white/50">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-foreground">Booking Request Saved</h2>
+          <p className="text-xs text-muted font-light leading-relaxed">
+            Your appointment has been registered in our database. A copy is routed to <strong className="text-foreground">atienoshalline29@gmail.com</strong>.
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            {/* Changed label text color to text-zinc-300 */}
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Service</label>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-muted">Service</label>
             <select 
               {...register('service')} 
               className="w-full bg-white border border-zinc-300 p-3 text-xs focus:outline-none focus:border-black text-black"
@@ -77,8 +75,7 @@ function BookingContent() {
           </div>
 
           <div>
-            {/* Changed label text color to text-zinc-300 */}
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Date</label>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-muted">Date</label>
             <input 
               type="date" 
               {...register('date')} 
@@ -88,8 +85,7 @@ function BookingContent() {
           </div>
 
           <div>
-            {/* Changed label text color to text-zinc-300 */}
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Your Name</label>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-muted">Your Name</label>
             <input 
               type="text" 
               {...register('name')} 
@@ -99,8 +95,7 @@ function BookingContent() {
           </div>
 
           <div>
-            {/* Changed label text color to text-zinc-300 */}
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-zinc-300">Email Address</label>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-2 text-muted">Email Address</label>
             <input 
               type="email" 
               {...register('email')} 
@@ -112,7 +107,7 @@ function BookingContent() {
           <button 
             type="submit" 
             disabled={isSubmitting} 
-            className="w-full bg-white text-black py-4 text-xs font-semibold tracking-widest uppercase hover:bg-zinc-200 disabled:bg-zinc-600 transition-colors"
+            className="w-full bg-foreground text-cream py-4 text-xs font-semibold tracking-widest uppercase hover:bg-accent disabled:bg-muted transition-colors"
           >
             {isSubmitting ? 'Processing...' : 'Request Appointment'}
           </button>
@@ -124,7 +119,7 @@ function BookingContent() {
 
 export default function Book() {
   return (
-    <Suspense fallback={<div className="text-center py-20 text-xs tracking-widest text-white">LOADING CONTENT...</div>}>
+    <Suspense fallback={<div className="text-center py-20 text-xs tracking-widest text-muted">Loading...</div>}>
       <BookingContent />
     </Suspense>
   );

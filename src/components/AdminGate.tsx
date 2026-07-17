@@ -38,14 +38,14 @@ export default function AdminGate() {
       {/* Admin Security Icon with Live Notification Counter Badge */}
       <button 
         onClick={() => setIsOpen(true)}
-        className="relative p-2 text-zinc-400 hover:text-white transition-colors focus:outline-none flex items-center justify-center"
+        className="relative p-2 text-muted hover:text-accent transition-colors focus:outline-none flex items-center justify-center"
         aria-label="Admin Portal"
       >
         <ShieldAlert className="w-5 h-5 stroke-[1.5]" />
         
         {/* Numerical Badge: Only shows when the count is greater than 0 */}
         {totalCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center border border-black shadow-lg animate-pulse">
+          <span className="absolute -top-1 -right-1 bg-accent text-white text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center border border-cream shadow-sm animate-pulse">
             {totalCount}
           </span>
         )}
